@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { supabase, type SiteAnnouncement } from '@/lib/supabase';
 import { fetchSiteAnnouncement } from '@/lib/announcements';
+import AdminFlyerUpload from '@/components/admin/AdminFlyerUpload';
 import { Save, Check, AlertCircle } from 'lucide-react';
 
 type FormState = {
@@ -152,17 +153,24 @@ export default function AdminAnnouncementForm() {
             <span className="font-inter text-sm text-charcoal">Show</span>
           </label>
         </div>
-        <div>
-          <label htmlFor="flyer_url" className={labelClass}>Flyer image link</label>
+        <AdminFlyerUpload value={form.flyer_url} onChange={(url) => update('flyer_url', url)} />
+        <details className="group">
+          <summary className="cursor-pointer font-inter text-xs text-muted-gray hover:text-charcoal transition-colors">
+            Or paste a link to an image instead
+          </summary>
           <input
             id="flyer_url"
             type="url"
+            aria-label="Flyer image link"
             value={form.flyer_url}
             onChange={(e) => update('flyer_url', e.target.value)}
             placeholder="https://..."
-            className={inputClass}
+            className={`${inputClass} mt-3`}
           />
-        </div>
+        </details>
+        <p className="text-muted-gray font-inter text-xs">
+          Your flyer goes live after you click Save Announcements.
+        </p>
       </section>
 
       <section className="bg-white rounded-2xl p-5 border border-cream-100 shadow-soft">
